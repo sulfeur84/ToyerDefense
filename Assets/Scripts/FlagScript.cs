@@ -11,6 +11,7 @@ public class FlagScript : MonoBehaviour
     
     private Transform _targetNode;
     private int _cNodeInd;
+    private bool _isEnded = false;
 
     private List<EnemiesScript> _enemiesInRange;
 
@@ -33,6 +34,8 @@ public class FlagScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_isEnded || GameManager.GamePaused) return;
+        
         float speed = speedPEnemies*_enemiesInRange.Count;
         
         transform.position = Vector3.MoveTowards(transform.position, _targetNode.position,  speed*Time.deltaTime);
@@ -49,6 +52,7 @@ public class FlagScript : MonoBehaviour
             }
             else //end player loose
             {
+                _isEnded = true;
                 GameManager.EndGameA(false);
             }
         }

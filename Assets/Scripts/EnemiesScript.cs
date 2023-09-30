@@ -6,17 +6,18 @@ using UnityEngine;
 
 public class EnemiesScript : MonoBehaviour
 {
-
+    [SerializeField] private int maxHp;
     [Range(.1f, 7f)] [SerializeField] private float speed;
     [SerializeField] private Transform nodesList;
     [SerializeField] private Transform flagTransform;
-
+    
+    private int _hp;
     private Transform _targetNode;
     private int _cNodeInd = 1;
-
     private bool _endTouched = false;
-
-    private bool _hasFlag = false;
+    private bool _isEnded = false;
+    
+    [HideInInspector] public bool _hasFlag = false;
 
     private float _flagSpeed;
 
@@ -24,11 +25,14 @@ public class EnemiesScript : MonoBehaviour
     void Start()
     {
         _targetNode = nodesList.GetChild(_cNodeInd);
+        _hp = maxHp;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.GamePaused || _isEnded) return;
+        
         transform.position = _hasFlag ?
             Vector3.MoveTowards(transform.position, _targetNode.position, _flagSpeed*Time.deltaTime)
             : Vector3.MoveTowards(transform.position, _targetNode.position, speed*Time.deltaTime);
@@ -52,8 +56,15 @@ public class EnemiesScript : MonoBehaviour
             if (nodesList.childCount <= _cNodeInd+1 || _endTouched || _hasFlag)
             {
                 _cNodeInd--;
-                _targetNode = nodesList.GetChild(_cNodeInd);
-                _endTouched = true;
+                if (_cNodeInd < 0)
+                {
+                    _isEnded = true;
+                }
+                else
+                {
+                    _targetNode = nodesList.GetChild(_cNodeInd);
+                    _endTouched = true;
+                }
             }
             else
             {
@@ -66,6 +77,12 @@ public class EnemiesScript : MonoBehaviour
     public void ChangeFlagSpeed(float flagSpeed)
     {
         _flagSpeed = flagSpeed;
+    }
+
+    public void GetDamaged(int damage)
+    {
+        _hp--;
+        if (_hp <= 0) Death();
     }
     
     private void Death()

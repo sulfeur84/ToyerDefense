@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static Action<bool> EndGameA;
+    [SerializeField] private Transform enemies;
+    [SerializeField] private Transform towers;
     
+    public static bool GamePaused = false;
+    
+    public static Action<bool> EndGameA;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void EndGame(bool result)//false for player loose and true for player win
     {
         Debug.Log("End Game : "+result);
+        PauseGame();
         if(result)
         {
             //win
@@ -30,5 +36,15 @@ public class GameManager : MonoBehaviour
         {
             //defeat
         }
+    }
+
+    private void PauseGame()
+    {
+        GamePaused = true;
+    }
+
+    private void UnpauseGame()
+    {
+        GamePaused = false;
     }
 }
