@@ -6,10 +6,17 @@ using UnityEngine.Timeline;
 
 public class TowerScript : MonoBehaviour
 {
+    [Header("Values")]
     [SerializeField] private int damage;
     [SerializeField] private float rateOfFire;
+    
+    [Header("SceneObjects")]
     [SerializeField] private Transform flag;
-    [SerializeField] private Transform spawnEnemy;
+    [SerializeField] private Transform flashPoint;
+    
+    [Header("Prefabs")]
+    [SerializeField] private GameObject muzzleFlash;
+    
 
     private List<EnemiesScript> _enemies;
 
@@ -60,7 +67,7 @@ public class TowerScript : MonoBehaviour
                 
                 Vector3 targetDirection = targetT - selfT;
                 
-                Vector3 dir = Vector3.RotateTowards(selfT, targetDirection, 1, 1);
+                Vector3 dir = Vector3.RotateTowards(selfT, targetDirection, 180, 0);
                 transform.rotation = Quaternion.LookRotation(dir);
                 
                 bool enemyDead = AttackTarget(target);
@@ -74,6 +81,7 @@ public class TowerScript : MonoBehaviour
 
     private bool AttackTarget(EnemiesScript target)
     {
+        Instantiate(muzzleFlash, flashPoint.position, flashPoint.rotation);
         return target.GetDamaged(damage);
     }
 
