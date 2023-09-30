@@ -19,6 +19,7 @@ public class TowerScript : MonoBehaviour
     void Start()
     {
         rotCnt = rateOfFire;
+        _enemies = new List<EnemiesScript>();
     }
 
     // Update is called once per frame
@@ -34,6 +35,11 @@ public class TowerScript : MonoBehaviour
                 float targetDist = 10000;
                 foreach (var enemy in _enemies)
                 {
+                    if (enemy == null)
+                    {
+                        _enemies.Remove(enemy);
+                        continue;
+                    }
                     if(enemy._hasFlag)
                     {
                         target = enemy;
@@ -49,28 +55,40 @@ public class TowerScript : MonoBehaviour
                     }
                 }
                 
-                AttackTarget(target);
+                Vector3 targetT = new Vector3(target.transform.position.x, 0, target.transform.position.z);
+                Vector3 selfT = new Vector3(transform.position.x, 0, transform.position.z);
+                
+                Vector3 targetDirection = targetT - selfT;
+                
+                Vector3 dir = Vector3.RotateTowards(selfT, targetDirection, 1, 1);
+                transform.rotation = Quaternion.LookRotation(dir);
+                
+                bool enemyDead = AttackTarget(target);
+
+                if (enemyDead) _enemies.Remove(target);
+                rotCnt = rateOfFire;
             }
         }
+        else rotCnt -= Time.deltaTime;
     }
 
-    private void AttackTarget(EnemiesScript target)
+    private bool AttackTarget(EnemiesScript target)
     {
-        target.GetDamaged(damage);
+        return target.GetDamaged(damage);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        EnemiesScript enemy = collision.gameObject.GetComponent<EnemiesScript>();
+        EnemiesScript enemy = other.gameObject.GetComponent<EnemiesScript>();
         if (enemy != null)
         {
             _enemies.Add(enemy);
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        EnemiesScript enemy = collision.gameObject.GetComponent<EnemiesScript>();
+        EnemiesScript enemy = other.gameObject.GetComponent<EnemiesScript>();
         if (enemy != null)
         {
             _enemies.Remove(enemy);

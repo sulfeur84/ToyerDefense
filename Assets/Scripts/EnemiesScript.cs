@@ -8,8 +8,8 @@ public class EnemiesScript : MonoBehaviour
 {
     [SerializeField] private int maxHp;
     [Range(.1f, 7f)] [SerializeField] private float speed;
-    [SerializeField] private Transform nodesList;
-    [SerializeField] private Transform flagTransform;
+    [SerializeField] private Transform _nodesList;
+    [SerializeField] private Transform _flagTransform;
     
     private int _hp;
     private Transform _targetNode;
@@ -21,10 +21,15 @@ public class EnemiesScript : MonoBehaviour
 
     private float _flagSpeed;
 
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _targetNode = nodesList.GetChild(_cNodeInd);
+        _targetNode = _nodesList.GetChild(_cNodeInd);
         _hp = maxHp;
     }
 
@@ -37,10 +42,14 @@ public class EnemiesScript : MonoBehaviour
             Vector3.MoveTowards(transform.position, _targetNode.position, _flagSpeed*Time.deltaTime)
             : Vector3.MoveTowards(transform.position, _targetNode.position, speed*Time.deltaTime);
 
+        Vector3 targetDirection = _targetNode.position - transform.position;
+        Vector3 dir = Vector3.RotateTowards(transform.position, targetDirection, 100, 0);
+        transform.rotation = Quaternion.LookRotation(dir);
+
         //todo : défaite si les ennemies retourche leur spawn avec l'objectif
 
         Vector3 selPos = new Vector3(transform.position.x, 0, transform.position.z);
-        Vector3 flagPos = new Vector3(flagTransform.position.x, 0, flagTransform.position.z);
+        Vector3 flagPos = new Vector3(_flagTransform.position.x, 0, _flagTransform.position.z);
         
         //if touche l'objectif alors le récupere et revient dans les targets nodes
         if (Vector3.Distance(selPos, flagPos) < 0.05f && !_hasFlag)
@@ -48,12 +57,12 @@ public class EnemiesScript : MonoBehaviour
             _hasFlag = true;
             FlagScript.AddEnemiesA(this);
             _cNodeInd--;
-            _targetNode = nodesList.GetChild(_cNodeInd);
+            _targetNode = _nodesList.GetChild(_cNodeInd);
         }
         
         if(Vector3.Distance(transform.position, _targetNode.position) < 0.001f)
         {
-            if (nodesList.childCount <= _cNodeInd+1 || _endTouched || _hasFlag)
+            if (_nodesList.childCount <= _cNodeInd+1 || _endTouched || _hasFlag)
             {
                 _cNodeInd--;
                 if (_cNodeInd < 0)
@@ -62,14 +71,14 @@ public class EnemiesScript : MonoBehaviour
                 }
                 else
                 {
-                    _targetNode = nodesList.GetChild(_cNodeInd);
+                    _targetNode = _nodesList.GetChild(_cNodeInd);
                     _endTouched = true;
                 }
             }
             else
             {
                 _cNodeInd++;
-                _targetNode = nodesList.GetChild(_cNodeInd);
+                _targetNode = _nodesList.GetChild(_cNodeInd);
             }
         }
     }
@@ -79,10 +88,17 @@ public class EnemiesScript : MonoBehaviour
         _flagSpeed = flagSpeed;
     }
 
-    public void GetDamaged(int damage)
+    public bool GetDamaged(int damage)
     {
         _hp--;
-        if (_hp <= 0) Death();
+        //Debug.Log(gameObject.name + " has lost " + _hp);
+        if (_hp <= 0)
+        {
+            Death();
+            return true;
+        }
+
+        return false;
     }
     
     private void Death()
@@ -90,5 +106,11 @@ public class EnemiesScript : MonoBehaviour
         FlagScript.RemoveEnemiesA(this);
         
         Destroy(gameObject);
+    }
+
+    public void AssignPath(Transform nodesList, Transform flagTransform)
+    {
+        this._flagTransform = flagTransform;
+        this._nodesList = nodesList;
     }
 }
