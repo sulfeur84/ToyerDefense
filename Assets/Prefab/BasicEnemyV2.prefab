@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
+  moneyGain: 40
   speed: 2
   _nodesList: {fileID: 0}
   _flagTransform: {fileID: 0}

@@ -42,12 +42,12 @@ public class TowerScript : MonoBehaviour
                 float targetDist = 10000;
                 foreach (var enemy in _enemies)
                 {
-                    if (enemy == null)
+                    if (enemy.isDead)
                     {
                         _enemies.Remove(enemy);
                         continue;
                     }
-                    if(enemy._hasFlag)
+                    if(enemy.hasFlag)
                     {
                         target = enemy;
                         break;
@@ -101,5 +101,10 @@ public class TowerScript : MonoBehaviour
         {
             _enemies.Remove(enemy);
         }
+    }
+
+    public void AssignFlag(Transform flag)
+    {
+        this.flag = flag;
     }
 }

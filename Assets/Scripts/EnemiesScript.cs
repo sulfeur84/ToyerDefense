@@ -6,8 +6,12 @@ using UnityEngine;
 
 public class EnemiesScript : MonoBehaviour
 {
+    [Header("Values")]
     [SerializeField] private int maxHp;
+    [SerializeField] private int moneyGain;
     [Range(.1f, 7f)] [SerializeField] private float speed;
+    
+    [Header("SceneObjects")]
     [SerializeField] private Transform _nodesList;
     [SerializeField] private Transform _flagTransform;
     
@@ -17,7 +21,8 @@ public class EnemiesScript : MonoBehaviour
     private bool _endTouched = false;
     private bool _isEnded = false;
     
-    [HideInInspector] public bool _hasFlag = false;
+    [HideInInspector] public bool hasFlag = false;
+    [HideInInspector] public bool isDead = false;
 
     private float _flagSpeed;
 
@@ -38,7 +43,7 @@ public class EnemiesScript : MonoBehaviour
     {
         if (GameManager.GamePaused || _isEnded) return;
         
-        transform.position = _hasFlag ?
+        transform.position = hasFlag ?
             Vector3.MoveTowards(transform.position, _targetNode.position, _flagSpeed*Time.deltaTime)
             : Vector3.MoveTowards(transform.position, _targetNode.position, speed*Time.deltaTime);
 
@@ -52,9 +57,9 @@ public class EnemiesScript : MonoBehaviour
         Vector3 flagPos = new Vector3(_flagTransform.position.x, 0, _flagTransform.position.z);
         
         //if touche l'objectif alors le récupere et revient dans les targets nodes
-        if (Vector3.Distance(selPos, flagPos) < 0.05f && !_hasFlag)
+        if (Vector3.Distance(selPos, flagPos) < 0.05f && !hasFlag)
         {
-            _hasFlag = true;
+            hasFlag = true;
             FlagScript.AddEnemiesA(this);
             _cNodeInd--;
             _targetNode = _nodesList.GetChild(_cNodeInd);
@@ -62,7 +67,7 @@ public class EnemiesScript : MonoBehaviour
         
         if(Vector3.Distance(transform.position, _targetNode.position) < 0.001f)
         {
-            if (_nodesList.childCount <= _cNodeInd+1 || _endTouched || _hasFlag)
+            if (_nodesList.childCount <= _cNodeInd+1 || _endTouched || hasFlag)
             {
                 _cNodeInd--;
                 if (_cNodeInd < 0)
@@ -104,7 +109,14 @@ public class EnemiesScript : MonoBehaviour
     private void Death()
     {
         FlagScript.RemoveEnemiesA(this);
-        
+        GameManager.GainMoneyA(moneyGain);
+
+        isDead = true;
+        Invoke("DestroySelf", 3f);
+    }
+
+    private void DestroySelf()
+    {
         Destroy(gameObject);
     }
 

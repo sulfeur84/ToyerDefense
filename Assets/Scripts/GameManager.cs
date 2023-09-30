@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Values")]
+    [Range(5, 60)] [SerializeField] private float waitBeforeFirstWave;
     [Range(.5f, 20)] [SerializeField] private float waitBetweenWaves;
+    [Range(100, 2000)] [SerializeField] private int startCurrency;
     
     [Header("SceneElements")]
     [SerializeField] private Transform enemies;
@@ -14,9 +17,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform enemySpawn;
     [SerializeField] private Transform nodesList;
     [SerializeField] private Transform flagTransform;
+    [SerializeField] private TextMeshProUGUI currencyDisplay;
+    [SerializeField] private Transform wavesCntDisplay;
 
     [Space]
-    [SerializeField] private List<Wave> WaveList;
+    [SerializeField] private List<Wave> waveList;
 
     private int _currentWaveInd = 0;
     private int _currentWaveEventInd = 0;
@@ -24,19 +29,33 @@ public class GameManager : MonoBehaviour
     private bool waveEnded = false;
     private bool NoMoreWave = false;
 
+    private int _currency;
+
     public static bool GamePaused = false;
+    public static TowerData TowerTypeSelected = null;
     
     public static Action<bool> EndGameA;
+    public static Action<Transform> TowerInstantiateA;
+    public static Action<int> GainMoneyA;
 
     // Start is called before the first frame update
     void Start()
     {
         EndGameA = EndGame;
-        
-        Wave currentWave = WaveList[_currentWaveInd];
-        WaveEvent currentEvent = currentWave.waveEventList[_currentWaveEventInd];
+        TowerInstantiateA = TowerInstantiate;
+        GainMoneyA = GainMoney;
 
-        _waveEventCnt = currentEvent.WaitBefore;
+        _currency = startCurrency;
+        
+        /*Wave currentWave = waveList[_currentWaveInd];
+        WaveEvent currentEvent = currentWave.waveEventList[_currentWaveEventInd];
+        */
+
+        currencyDisplay.text = _currency.ToString();
+
+        wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = "/ " + waveList.Count;
+        
+        _waveEventCnt = waitBeforeFirstWave;
     }
 
     // Update is called once per frame
@@ -59,7 +78,7 @@ public class GameManager : MonoBehaviour
         }
         waveEnded = false;
 
-        Wave currentWave = WaveList[_currentWaveInd];
+        Wave currentWave = waveList[_currentWaveInd];
 
         WaveEvent currentEvent = currentWave.waveEventList[_currentWaveEventInd];
 
@@ -71,8 +90,10 @@ public class GameManager : MonoBehaviour
         {
             _currentWaveEventInd = 0;
             _currentWaveInd++;
+            
+            wavesCntDisplay.GetChild(0).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
 
-            if(_currentWaveInd >= WaveList.Count)//No more Waves
+            if(_currentWaveInd >= waveList.Count)//No more Waves
             {
                 NoMoreWave = true;
             }
@@ -119,5 +140,48 @@ public class GameManager : MonoBehaviour
     private void UnpauseGame()
     {
         GamePaused = false;
+    }
+
+    public void TowerSelectionButton(TowerData towerData)
+    {
+        if (_currency >= towerData.GetCost())
+        {
+            TowerTypeSelected = towerData;
+            
+            //todo : Hide tower selection buttons and display yne cancel button
+        }
+        else
+        {
+            //todo : display error
+            Debug.Log("Not enough Money!");
+        }
+    }
+
+    private void TowerInstantiate(Transform towerBase)
+    {
+        GameObject tower = Instantiate(TowerTypeSelected.GetTowerGo(), towerBase.position, towerBase.rotation);
+
+        tower.GetComponent<TowerScript>().AssignFlag(flagTransform);
+        _currency -= TowerTypeSelected.GetCost();
+        currencyDisplay.text = _currency.ToString();
+
+        TowerTypeSelected = null;
+    }
+
+    private void GainMoney(int value)
+    {
+        _currency += value;
+        currencyDisplay.text = _currency.ToString();
+    }
+
+    private void ResetStaticValues()
+    {
+        TowerTypeSelected = null;
+        GamePaused = false;
+    }
+
+    private void OnDestroy()
+    {
+        ResetStaticValues();
     }
 }
