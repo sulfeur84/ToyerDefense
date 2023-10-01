@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform flagTransform;
     [SerializeField] private TextMeshProUGUI currencyDisplay;
     [SerializeField] private Transform wavesCntDisplay;
+    [SerializeField] private GameObject alarmGo;
 
     [Space]
     [SerializeField] private List<Wave> waveList;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     private int _currentWaveInd = 0;
     private int _currentWaveEventInd = 0;
     private float _waveEventCnt = 0;
-    private bool waveEnded = false;
+    private bool waveEnded = true;
     private bool NoMoreWave = false;
 
     private int _currency;
@@ -38,15 +39,20 @@ public class GameManager : MonoBehaviour
     public static Action<bool> EndGameA;
     public static Action<Transform> TowerInstantiateA;
     public static Action<int> GainMoneyA;
+    public static Action<bool> TriggerAlarmA;
+
+    private void Awake()
+    {
+        TriggerAlarmA = TriggerAlarm;
+        EndGameA = EndGame;
+        TowerInstantiateA = TowerInstantiate;
+        GainMoneyA = GainMoney;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         //Time.timeScale *= 1.5f;
-        
-        EndGameA = EndGame;
-        TowerInstantiateA = TowerInstantiate;
-        GainMoneyA = GainMoney;
 
         _currency = startCurrency;
 
@@ -76,7 +82,12 @@ public class GameManager : MonoBehaviour
             _waveEventCnt -= Time.deltaTime;
             return;
         }
-        waveEnded = false;
+
+        if (waveEnded)
+        {
+            waveEnded = false;
+            SoundManager.PlaySfxA("NextRound");
+        }
 
         Wave currentWave = waveList[_currentWaveInd];
 
@@ -102,7 +113,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("End Wave");
                 waveEnded = true;
                 _waveEventCnt = waitBetweenWaves;
-                SoundManager.PlaySfxA("NextRound");
             }
         }
         else
@@ -192,5 +202,10 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         ResetStaticValues();
+    }
+
+    private void TriggerAlarm(bool b)
+    {
+        alarmGo.SetActive(b);
     }
 }
