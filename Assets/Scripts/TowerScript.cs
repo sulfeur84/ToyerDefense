@@ -82,6 +82,7 @@ public class TowerScript : MonoBehaviour
     private bool AttackTarget(EnemiesScript target)
     {
         Instantiate(muzzleFlash, flashPoint.position, flashPoint.rotation);
+        SoundManager.PlaySfxA("Shot");
         return target.GetDamaged(damage);
     }
 

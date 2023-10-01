@@ -15,6 +15,10 @@ public class EnemiesScript : MonoBehaviour
     [SerializeField] private Transform _nodesList;
     [SerializeField] private Transform _flagTransform;
     
+    [Header("Prefab")]
+    [SerializeField] private GameObject deathVfx;
+    [SerializeField] private GameObject damageVfx;
+    
     private int _hp;
     private Transform _targetNode;
     private int _cNodeInd = 1;
@@ -97,6 +101,8 @@ public class EnemiesScript : MonoBehaviour
     {
         _hp -= damage;
         //Debug.Log(gameObject.name + " has lost " + damage + " and has " + _hp + " left.");
+
+        Instantiate(damageVfx, transform.position, transform.rotation);
         if (_hp <= 0)
         {
             Death();
@@ -110,6 +116,10 @@ public class EnemiesScript : MonoBehaviour
     {
         FlagScript.RemoveEnemiesA(this);
         GameManager.GainMoneyA(moneyGain);
+        
+        SoundManager.PlaySfxA("EnemyDie");
+
+        Instantiate(deathVfx, transform.position, transform.rotation);
 
         isDead = true;
         DestroySelf();

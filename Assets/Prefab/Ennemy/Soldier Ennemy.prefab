@@ -51,6 +51,8 @@ MonoBehaviour:
   speed: 2
   _nodesList: {fileID: 0}
   _flagTransform: {fileID: 0}
+  deathVfx: {fileID: 717581454659820378, guid: 8a44c5fc8b6328e418374b1820124122, type: 3}
+  damageVfx: {fileID: 8698192318487393394, guid: 34593870bea98a04596964f6ce482c5f, type: 3}
   hasFlag: 0
   isDead: 0
 --- !u!136 &2435974593508053475

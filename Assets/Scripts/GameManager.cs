@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         currencyDisplay.text = _currency.ToString();
 
         wavesCntDisplay.GetChild(2).GetComponent<TextMeshProUGUI>().text = "/ " + waveList.Count;
-        wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
+        wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = (_currentWaveInd + 1).ToString();
         
         _waveEventCnt = waitBeforeFirstWave;
     }
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
             _currentWaveEventInd = 0;
             _currentWaveInd++;
             
-            wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
+            wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = (_currentWaveInd + 1).ToString();
 
             if(_currentWaveInd >= waveList.Count)//No more Waves
             {
@@ -102,11 +102,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("End Wave");
                 waveEnded = true;
                 _waveEventCnt = waitBetweenWaves;
+                SoundManager.PlaySfxA("NextRound");
             }
         }
         else
         {
-            Debug.Log("End Event");
             _waveEventCnt = currentEvent.WaitBefore;
         }
     }

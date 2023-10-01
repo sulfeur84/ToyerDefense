@@ -71,6 +71,9 @@ public class FlagScript : MonoBehaviour
     {
         _enemiesInRange.Add(enemiesScript);
 
+        if (_enemiesInRange.Count >= 1)
+            SoundManager.PlayStressedMusicA(true);
+        
         float speedTotal = 0;
 
         foreach (EnemiesScript enemy in _enemiesInRange)
@@ -84,6 +87,9 @@ public class FlagScript : MonoBehaviour
     private void RemoveEnemies(EnemiesScript enemiesScript)
     {
         _enemiesInRange.Remove(enemiesScript);
+
+        if (_enemiesInRange.Count <= 0)
+            SoundManager.PlayStressedMusicA(false);
 
         float speedTotal = 0;
 
