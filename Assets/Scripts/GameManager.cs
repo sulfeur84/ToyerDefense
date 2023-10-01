@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
             _currentWaveEventInd = 0;
             _currentWaveInd++;
             
-            wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = (_currentWaveInd + 1).ToString();
 
             if(_currentWaveInd >= waveList.Count)//No more Waves
             {
@@ -110,6 +109,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = (_currentWaveInd + 1).ToString();
                 Debug.Log("End Wave");
                 waveEnded = true;
                 _waveEventCnt = waitBetweenWaves;
