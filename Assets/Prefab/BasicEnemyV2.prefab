@@ -47,11 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
-  moneyGain: 40
+  moneyGain: 30
   speed: 2
   _nodesList: {fileID: 0}
   _flagTransform: {fileID: 0}
-  _hasFlag: 0
+  hasFlag: 0
+  isDead: 0
 --- !u!136 &6142729068487045106
 CapsuleCollider:
   m_ObjectHideFlags: 0

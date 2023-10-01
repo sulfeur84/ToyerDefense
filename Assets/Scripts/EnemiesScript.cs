@@ -112,7 +112,7 @@ public class EnemiesScript : MonoBehaviour
         GameManager.GainMoneyA(moneyGain);
 
         isDead = true;
-        Invoke("DestroySelf", 3f);
+        DestroySelf();
     }
 
     private void DestroySelf()

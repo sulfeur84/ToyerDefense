@@ -978,7 +978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitBeforeFirstWave: 25
   waitBetweenWaves: 2
-  startCurrency: 100
+  startCurrency: 120
   enemies: {fileID: 151471474}
   towers: {fileID: 1339468181}
   enemySpawn: {fileID: 566467285}
