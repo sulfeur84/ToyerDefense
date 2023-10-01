@@ -125,4 +125,9 @@ public class EnemiesScript : MonoBehaviour
         this._flagTransform = flagTransform;
         this._nodesList = nodesList;
     }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
 }

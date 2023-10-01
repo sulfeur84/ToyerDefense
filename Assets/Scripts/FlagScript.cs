@@ -35,8 +35,17 @@ public class FlagScript : MonoBehaviour
     void Update()
     {
         if(_isEnded || GameManager.GamePaused) return;
+
+        float speedTotal = 0;
+
+        foreach (EnemiesScript enemy in _enemiesInRange)
+        {
+            speedTotal += enemy.GetSpeed() * speedPEnemies;
+        }
         
-        float speed = speedPEnemies*_enemiesInRange.Count;
+        //float speed = speedPEnemies*_enemiesInRange.Count;
+        
+        float speed = speedTotal;
         
         transform.position = Vector3.MoveTowards(transform.position, _targetNode.position,  speed*Time.deltaTime);
 
@@ -61,20 +70,36 @@ public class FlagScript : MonoBehaviour
     private void AddEnemies(EnemiesScript enemiesScript)
     {
         _enemiesInRange.Add(enemiesScript);
-        UpdateSpeed();
+
+        float speedTotal = 0;
+
+        foreach (EnemiesScript enemy in _enemiesInRange)
+        {
+            speedTotal += enemy.GetSpeed() * speedPEnemies;
+        }
+        
+        UpdateSpeed(speedTotal);
     }
 
     private void RemoveEnemies(EnemiesScript enemiesScript)
     {
         _enemiesInRange.Remove(enemiesScript);
-        UpdateSpeed();
+
+        float speedTotal = 0;
+
+        foreach (EnemiesScript enemy in _enemiesInRange)
+        {
+            speedTotal += enemy.GetSpeed() * speedPEnemies;
+        }
+        
+        UpdateSpeed(speedTotal);
     }
 
-    private void UpdateSpeed()
+    private void UpdateSpeed(float speed)
     {
         foreach (EnemiesScript enemies in _enemiesInRange)
         {
-            enemies.ChangeFlagSpeed(_enemiesInRange.Count*speedPEnemies);
+            enemies.ChangeFlagSpeed(speed);
         }
     }
 }

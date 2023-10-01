@@ -1391,12 +1391,12 @@ MonoBehaviour:
   currencyDisplay: {fileID: 729744838}
   wavesCntDisplay: {fileID: 1718916110}
   waveList:
+  - {fileID: 11400000, guid: 69dfc0313812f4442a3d0df680708a3f, type: 2}
   - {fileID: 11400000, guid: e9b46c46a9db3e5488d043bc0e163580, type: 2}
   - {fileID: 11400000, guid: 6cefc70eb7ad5cf4c9d7f7003b76281b, type: 2}
   - {fileID: 11400000, guid: 512418647e41723468764349d4d54ef9, type: 2}
   - {fileID: 11400000, guid: 388c45ffc496962498eb44bcf1435530, type: 2}
   - {fileID: 11400000, guid: b8f8a9b78c827bd49bdce407391cce20, type: 2}
-  - {fileID: 11400000, guid: 69dfc0313812f4442a3d0df680708a3f, type: 2}
 --- !u!4 &354234729
 Transform:
   m_ObjectHideFlags: 0
@@ -4675,7 +4675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb55c8eb562cbb47bc4ad9cdd55c932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedPEnemies: 0.4
+  speedPEnemies: 0.2
   nodesList: {fileID: 1520506428}
   startTransform: {fileID: 881278475}
 --- !u!1001 &1290816878
