@@ -95,8 +95,8 @@ public class EnemiesScript : MonoBehaviour
 
     public bool GetDamaged(int damage)
     {
-        _hp--;
-        //Debug.Log(gameObject.name + " has lost " + _hp);
+        _hp -= damage;
+        //Debug.Log(gameObject.name + " has lost " + damage + " and has " + _hp + " left.");
         if (_hp <= 0)
         {
             Death();

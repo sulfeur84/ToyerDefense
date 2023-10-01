@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39aa505078f165f40a36c179bf5f1586, type: 3}
+  m_Name: MachineGunTower
+  m_EditorClassIdentifier: 
+  cost: 200
+  towerPrefab: {fileID: 6106366372706231630, guid: 07266492c298cfc4a989a36bc0e7e8a4, type: 3}
+  towerPreview: {fileID: 9201535787135645674, guid: 71cc5f0c26bb96b4c850c7273449fa97, type: 3}

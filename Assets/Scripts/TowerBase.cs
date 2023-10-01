@@ -7,15 +7,13 @@ public class TowerBase : MonoBehaviour
     
     public void OnMouseEnter()
     {
-        Debug.Log("dddddddddd");
         if(GameManager.TowerTypeSelected == null) return;
 
-        towerPreview = Instantiate(GameManager.TowerTypeSelected.GetTowerPreviewGo(), transform.position, transform.rotation);
+        towerPreview = Instantiate(GameManager.TowerTypeSelected.GetTowerPreviewGo(), transform.GetChild(0).position, transform.rotation);
     }
 
     public void OnMouseExit()
     {
-        Debug.Log("fffffffffffffffff");
         if(towerPreview != null)
         {
             Destroy(towerPreview);
@@ -25,12 +23,11 @@ public class TowerBase : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Debug.Log("hhhhhhhhhhhhhhhh");
         if(GameManager.TowerTypeSelected == null) return;
         
         Destroy(towerPreview);
 
-        GameManager.TowerInstantiateA(transform);
+        GameManager.TowerInstantiateA(transform.GetChild(0));
         
         Destroy(this);
     }

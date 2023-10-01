@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 716860794731923757}
   - component: {fileID: 7087729466972233040}
   - component: {fileID: 2675881128677420312}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0.039215688, g: 0.24705882, b: 0, a: 1}
-  outlineWidth: 10
+  outlineWidth: 5
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: -8570783584528991670}
   - component: {fileID: -328192347542931404}
   - component: {fileID: -2161024106942219343}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SoldierTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcab4d26104cb6843bf541c50936907a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 2
   rateOfFire: 0.75
   flag: {fileID: 0}
   flashPoint: {fileID: 5707784036151162366}
@@ -193,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5707784036151162366}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MuzzleFlashPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

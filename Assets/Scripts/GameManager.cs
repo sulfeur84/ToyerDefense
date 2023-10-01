@@ -42,19 +42,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Time.timeScale *= 1.5f;
+        
         EndGameA = EndGame;
         TowerInstantiateA = TowerInstantiate;
         GainMoneyA = GainMoney;
 
         _currency = startCurrency;
-        
-        /*Wave currentWave = waveList[_currentWaveInd];
-        WaveEvent currentEvent = currentWave.waveEventList[_currentWaveEventInd];
-        */
 
         currencyDisplay.text = _currency.ToString();
 
-        wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = "/ " + waveList.Count;
+        wavesCntDisplay.GetChild(2).GetComponent<TextMeshProUGUI>().text = "/ " + waveList.Count;
+        wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
         
         _waveEventCnt = waitBeforeFirstWave;
     }
@@ -92,7 +91,7 @@ public class GameManager : MonoBehaviour
             _currentWaveEventInd = 0;
             _currentWaveInd++;
             
-            wavesCntDisplay.GetChild(0).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
+            wavesCntDisplay.GetChild(1).GetComponent<TextMeshProUGUI>().text = _currentWaveInd.ToString();
 
             if(_currentWaveInd >= waveList.Count)//No more Waves
             {
@@ -151,7 +150,7 @@ public class GameManager : MonoBehaviour
         {
             TowerTypeSelected = towerData;
             
-            //todo : Hide tower selection buttons and display yne cancel button
+            UiManager.HideShopCardA();
         }
         else
         {
@@ -160,14 +159,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void CancelTowerSelection()
+    {
+        UiManager.DisplayShopCardA();
+        TowerTypeSelected = null;
+    }
+
     private void TowerInstantiate(Transform towerBase)
     {
-        GameObject tower = Instantiate(TowerTypeSelected.GetTowerGo(), towerBase.position, towerBase.rotation);
+        GameObject tower = Instantiate(TowerTypeSelected.GetTowerGo(), towerBase.position, towerBase.rotation, towers);
 
         tower.GetComponent<TowerScript>().AssignFlag(flagTransform);
         _currency -= TowerTypeSelected.GetCost();
         currencyDisplay.text = _currency.ToString();
 
+        UiManager.DisplayShopCardA();
         TowerTypeSelected = null;
     }
 

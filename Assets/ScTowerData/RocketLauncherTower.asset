@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39aa505078f165f40a36c179bf5f1586, type: 3}
+  m_Name: RocketLauncherTower
+  m_EditorClassIdentifier: 
+  cost: 750
+  towerPrefab: {fileID: 8893292977757718620, guid: f404f4722d90c8b4bbbbd3c3a5f4d5f8, type: 3}
+  towerPreview: {fileID: 9201535787135645674, guid: a2e4597581f8822439d9ba4044a99b2d, type: 3}

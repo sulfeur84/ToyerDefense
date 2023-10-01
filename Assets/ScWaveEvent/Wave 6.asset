@@ -10,14 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24e624fb4e3751944969713f15c7dee3, type: 3}
-  m_Name: Wave 3
+  m_Name: Wave 6
   m_EditorClassIdentifier: 
   waveEventList:
+  - {fileID: 11400000, guid: af08f9b5dac6ce34280fdd11738af833, type: 2}
+  - {fileID: 11400000, guid: 40ec557d97ca0ec44a00de6f56eda39b, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
-  - {fileID: 11400000, guid: 053f4185151c0b64eb498d67c3625804, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
   - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
+  - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
+  - {fileID: 11400000, guid: cfeb9ce57cdbf4e4e8a3893c3a8e1484, type: 2}
+  - {fileID: 11400000, guid: bad6a080b82586e4c9763640b78c3638, type: 2}
+  - {fileID: 11400000, guid: 4224f72c678f2eb4781050eda8243698, type: 2}
+  - {fileID: 11400000, guid: 4224f72c678f2eb4781050eda8243698, type: 2}
+  - {fileID: 11400000, guid: 9d2995e770c4ae94dab51e8b966635d9, type: 2}
+  - {fileID: 11400000, guid: af08f9b5dac6ce34280fdd11738af833, type: 2}
