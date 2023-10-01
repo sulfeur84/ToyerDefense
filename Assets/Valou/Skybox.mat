@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Skybox
   m_Shader: {fileID: 4800000, guid: 9a9f173a987cd4147926c4c1a9862e2f, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SCREENSPACE_ON
   m_InvalidKeywords:
   - _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 4
@@ -72,7 +73,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Screenspace: 0
+    - _Screenspace: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
